@@ -1,7 +1,6 @@
 import { Box, Button, Container, Typography } from '@mui/material'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-
-const APP_URL = 'https://app.granito.com.ar/login'
+import { APP_URL } from '../config'
 
 const PROPERTIES = [
   { title: 'Casa en Palermo', price: 'USD 185.000', status: 'Disponible', statusColor: '#065F46', statusBg: '#ECFDF5' },

@@ -1,6 +1,5 @@
 import { Box, Button, Container, Typography } from '@mui/material'
-
-const APP_URL = 'https://app.granito.com.ar/login'
+import { APP_URL } from '../config'
 
 export default function Navbar() {
   return (
