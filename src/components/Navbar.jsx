@@ -1,6 +1,6 @@
 import { Box, Button, Container, Typography } from '@mui/material'
 
-const APP_URL = 'https://consorcios-app.vercel.app/login'
+const APP_URL = 'https://app.granito.com.ar/login'
 
 export default function Navbar() {
   return (
