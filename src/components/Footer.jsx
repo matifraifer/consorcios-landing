@@ -20,15 +20,28 @@ export default function Footer() {
             © {new Date().getFullYear()} Granito. Todos los derechos reservados.
           </Typography>
 
-          <Box
-            component="a" href={APP_URL}
-            sx={{
-              fontSize: '0.82rem', fontWeight: 600, color: '#9CA3AF',
-              textDecoration: 'none',
-              '&:hover': { color: '#10B981' },
-            }}
-          >
-            Ingresar
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+            <Box
+              component="a" href="/politica-de-privacidad"
+              sx={{
+                fontSize: '0.82rem', fontWeight: 600, color: '#9CA3AF',
+                textDecoration: 'none',
+                '&:hover': { color: '#10B981' },
+              }}
+            >
+              Política de Privacidad
+            </Box>
+
+            <Box
+              component="a" href={APP_URL}
+              sx={{
+                fontSize: '0.82rem', fontWeight: 600, color: '#9CA3AF',
+                textDecoration: 'none',
+                '&:hover': { color: '#10B981' },
+              }}
+            >
+              Ingresar
+            </Box>
           </Box>
         </Box>
       </Container>
