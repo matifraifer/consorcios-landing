@@ -38,6 +38,12 @@ const QUESTIONS = [
     options: ['Siempre pago al día', 'Entre 1 a 7 días', 'Más de 7 días'],
   },
   {
+    id: 'valor_expensas',
+    type: 'single',
+    question: '¿Cuál es el valor aproximado de tus expensas?',
+    options: ['Menos de $30.000', 'Entre $30.000 y 50.000', 'Entre 50.000 y 90.000', 'Más de 90.000'],
+  },
+  {
     id: 'falta_gestion',
     type: 'multi',
     question: 'En cuanto a la gestión y administración de tu consorcio, ¿qué sentís que falta?',
