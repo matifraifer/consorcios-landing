@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box, Button, CircularProgress, Fade, TextField, Typography } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded'
@@ -436,6 +436,51 @@ export default function Survey() {
   const answeredCount = Object.keys(answers).length
   const currentQuestion = QUESTIONS[index]
 
+  function reportError(context, message, extraAnswers) {
+    fetch('/api/log-error', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        context,
+        message,
+        answers: extraAnswers,
+        userAgent: navigator.userAgent,
+        timestamp: new Date().toISOString(),
+      }),
+    }).catch(() => {
+      // si tampoco se puede loguear, no hay mucho más para hacer
+    })
+  }
+
+  useEffect(() => {
+    if (!SURVEY_ENDPOINT) return
+    let pending
+    try {
+      pending = JSON.parse(localStorage.getItem('granito_survey_failed') || 'null')
+    } catch {
+      pending = null
+    }
+    if (pending?.answers) {
+      fetch(SURVEY_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ timestamp: pending.timestamp, answers: pending.answers }),
+      }).then((res) => {
+        if (res.ok) {
+          try {
+            localStorage.removeItem('granito_survey_failed')
+          } catch {
+            // localStorage no disponible, no hacemos nada
+          }
+        } else {
+          reportError('retry-on-load', `Respuesta no OK (status ${res.status})`, pending.answers)
+        }
+      }).catch((err) => {
+        reportError('retry-on-load', err?.message || String(err), pending.answers)
+      })
+    }
+  }, [])
+
   async function submitAnswers(finalAnswers) {
     setStatus('submitting')
     if (!SURVEY_ENDPOINT) {
@@ -449,9 +494,24 @@ export default function Survey() {
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({ timestamp: new Date().toISOString(), answers: finalAnswers }),
       })
-      if (!res.ok) throw new Error('Respuesta no OK')
+      if (!res.ok) throw new Error(`Respuesta no OK (status ${res.status})`)
+      try {
+        localStorage.removeItem('granito_survey_failed')
+      } catch {
+        // localStorage no disponible, no hacemos nada
+      }
       setStatus('done')
-    } catch {
+    } catch (err) {
+      const message = err?.message || String(err)
+      console.error('Error al guardar la encuesta:', message)
+      try {
+        localStorage.setItem('granito_survey_failed', JSON.stringify({
+          message, timestamp: new Date().toISOString(), answers: finalAnswers,
+        }))
+      } catch {
+        // localStorage no disponible, no hacemos nada
+      }
+      reportError('submit', message, finalAnswers)
       setStatus('error')
     }
   }
