@@ -107,7 +107,9 @@ function OptionRow({ label, selected, disabled, onClick, shape = 'circle' }) {
         cursor: disabled ? 'default' : 'pointer',
         fontFamily: 'inherit',
         transition: 'all 0.15s ease',
-        '&:hover': disabled ? {} : { borderColor: colors.accent, bgcolor: colors.accentSubtle },
+        '@media (hover: hover)': {
+          '&:hover': disabled || selected ? {} : { borderColor: colors.accentSoft },
+        },
       }}
     >
       <Typography sx={{ fontSize: '0.92rem', fontWeight: 600, color: selected ? colors.accent : colors.text }}>
