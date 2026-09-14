@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Features from './components/Features'
@@ -12,7 +13,12 @@ export default function App() {
   const path = window.location.pathname
 
   if (path === '/survey') {
-    return <Survey />
+    return (
+      <>
+        <Survey />
+        <Analytics />
+      </>
+    )
   }
 
   const isPrivacyPolicy = path === '/politica-de-privacidad'
@@ -34,6 +40,7 @@ export default function App() {
         )}
       </main>
       <Footer />
+      <Analytics />
     </>
   )
 }
