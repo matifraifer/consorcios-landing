@@ -1,5 +1,6 @@
 import { Box, Button, Container, Typography } from '@mui/material'
 import { APP_URL } from '../config'
+import { colors, radius, shadow } from '../theme/tokens'
 
 export default function Navbar() {
   return (
@@ -7,19 +8,27 @@ export default function Navbar() {
       component="nav"
       sx={{
         position: 'sticky', top: 0, zIndex: 100,
-        bgcolor: 'rgba(255,255,255,0.92)',
+        bgcolor: 'rgba(247,250,249,0.85)',
         backdropFilter: 'blur(8px)',
-        borderBottom: '1px solid #E5E7EB',
+        borderBottom: `1px solid ${colors.border}`,
       }}
     >
       <Container maxWidth="lg">
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', py: 2 }}>
-          <Typography sx={{
-            fontSize: '1.2rem', fontWeight: 800, color: '#065F46',
-            letterSpacing: '-0.03em', fontFamily: 'Poppins, sans-serif',
-          }}>
-            Granito
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
+            <Box
+              component="img"
+              src="/logo.svg"
+              alt="Granito"
+              sx={{ height: 30, width: 'auto', flexShrink: 0 }}
+            />
+            <Typography sx={{
+              fontSize: '1.2rem', fontWeight: 800, color: colors.primary,
+              letterSpacing: '-0.03em', fontFamily: 'Poppins, sans-serif',
+            }}>
+              Granito
+            </Typography>
+          </Box>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 2, md: 4 } }}>
             {[
@@ -32,9 +41,9 @@ export default function Navbar() {
                 component="a" href={href}
                 sx={{
                   display: { xs: 'none', md: 'block' },
-                  fontSize: '0.82rem', fontWeight: 500, color: '#374151',
+                  fontSize: '0.82rem', fontWeight: 500, color: colors.textMuted,
                   textDecoration: 'none',
-                  '&:hover': { color: '#065F46' },
+                  '&:hover': { color: colors.primary },
                 }}
               >
                 {label}
@@ -45,10 +54,10 @@ export default function Navbar() {
               component="a" href={APP_URL}
               variant="contained"
               sx={{
-                bgcolor: '#065F46', color: 'white', borderRadius: '8px',
+                bgcolor: colors.accent, color: 'white', borderRadius: radius.md,
                 textTransform: 'none', fontWeight: 600, fontSize: '0.82rem',
-                boxShadow: 'none', px: 2.5, py: 1,
-                '&:hover': { bgcolor: '#047857', boxShadow: 'none' },
+                boxShadow: shadow.accent, px: 2.5, py: 1,
+                '&:hover': { bgcolor: colors.accentHover, boxShadow: shadow.accentHover },
               }}
             >
               Ingresar

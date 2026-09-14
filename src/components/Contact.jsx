@@ -1,25 +1,27 @@
 import { Box, Button, Container, Typography } from '@mui/material'
 import EmailIcon from '@mui/icons-material/Email'
 import WhatsAppIcon from '@mui/icons-material/WhatsApp'
+import { colors, radius, gradients, grainOverlay } from '../theme/tokens'
 
 export default function Contact() {
   return (
-    <Box id="contacto" sx={{ py: { xs: 8, md: 12 }, bgcolor: '#065F46' }}>
-      <Container maxWidth="md" sx={{ textAlign: 'center' }}>
+    <Box id="contacto" sx={{ py: { xs: 8, md: 12 }, background: gradients.greenOrange, position: 'relative', overflow: 'hidden' }}>
+      <Box sx={grainOverlay} />
+      <Container maxWidth="md" sx={{ textAlign: 'center', position: 'relative' }}>
         <Typography sx={{
           fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.15em',
-          textTransform: 'uppercase', color: '#6EE7B7', mb: 2,
+          textTransform: 'uppercase', color: colors.accentSoft, mb: 2,
         }}>
           Contacto
         </Typography>
         <Typography sx={{
           fontSize: { xs: '1.8rem', md: '2.4rem' }, fontWeight: 800,
-          color: 'white', letterSpacing: '-0.02em', lineHeight: 1.2, mb: 2,
+          color: colors.textOnDark, letterSpacing: '-0.02em', lineHeight: 1.2, mb: 2,
         }}>
           Hablemos
         </Typography>
         <Typography sx={{
-          fontSize: '1rem', color: '#A7F3D0', lineHeight: 1.75,
+          fontSize: '1rem', color: colors.textOnDarkMuted, lineHeight: 1.75,
           mb: 5, maxWidth: 480, mx: 'auto',
         }}>
           Si tenés preguntas sobre Granito o querés ver cómo puede ayudarte,
@@ -33,10 +35,10 @@ export default function Contact() {
             startIcon={<EmailIcon />}
             variant="contained"
             sx={{
-              bgcolor: 'white', color: '#065F46', borderRadius: '10px',
+              bgcolor: colors.accent, color: 'white', borderRadius: radius.lg,
               textTransform: 'none', fontWeight: 700, fontSize: '0.9rem',
               px: 3, py: 1.4, boxShadow: 'none',
-              '&:hover': { bgcolor: '#ECFDF5', boxShadow: 'none' },
+              '&:hover': { bgcolor: colors.accentHover, boxShadow: 'none' },
             }}
           >
             Escribinos por email
@@ -49,10 +51,10 @@ export default function Contact() {
             startIcon={<WhatsAppIcon />}
             variant="outlined"
             sx={{
-              borderColor: 'rgba(255,255,255,0.35)', color: 'white', borderRadius: '10px',
+              borderColor: 'rgba(226,240,232,0.35)', color: colors.textOnDark, borderRadius: radius.lg,
               textTransform: 'none', fontWeight: 700, fontSize: '0.9rem',
               px: 3, py: 1.4,
-              '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.08)' },
+              '&:hover': { borderColor: colors.textOnDark, bgcolor: 'rgba(226,240,232,0.08)' },
             }}
           >
             WhatsApp

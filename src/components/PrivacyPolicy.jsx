@@ -1,4 +1,5 @@
 import { Box, Container, Typography } from '@mui/material'
+import { colors } from '../theme/tokens'
 
 const sections = [
   {
@@ -41,25 +42,25 @@ const sections = [
 
 export default function PrivacyPolicy() {
   return (
-    <Box sx={{ py: { xs: 8, md: 10 }, bgcolor: 'white' }}>
+    <Box sx={{ py: { xs: 8, md: 10 }, bgcolor: colors.surface }}>
       <Container maxWidth="md">
         <Typography sx={{
           fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.15em',
-          textTransform: 'uppercase', color: '#065F46', mb: 2,
+          textTransform: 'uppercase', color: colors.accent, mb: 2,
         }}>
           Legal
         </Typography>
         <Typography sx={{
           fontSize: { xs: '1.8rem', md: '2.2rem' }, fontWeight: 800,
-          color: '#111827', letterSpacing: '-0.02em', lineHeight: 1.2, mb: 1,
+          color: colors.primary, letterSpacing: '-0.02em', lineHeight: 1.2, mb: 1,
         }}>
           Política de Privacidad
         </Typography>
-        <Typography sx={{ fontSize: '0.82rem', color: '#9CA3AF', mb: 5 }}>
+        <Typography sx={{ fontSize: '0.82rem', color: colors.textMuted, mb: 5 }}>
           Última actualización: 10 de julio de 2026
         </Typography>
 
-        <Typography sx={{ fontSize: '0.95rem', color: '#374151', lineHeight: 1.75, mb: 5 }}>
+        <Typography sx={{ fontSize: '0.95rem', color: colors.text, lineHeight: 1.75, mb: 5 }}>
           En Granito valoramos tu privacidad. Esta política describe qué información recopilamos
           a través de este sitio web, cómo la utilizamos y qué derechos tenés sobre tus datos personales.
         </Typography>
@@ -67,11 +68,11 @@ export default function PrivacyPolicy() {
         {sections.map(({ title, body }) => (
           <Box key={title} sx={{ mb: 4 }}>
             <Typography sx={{
-              fontSize: '1.05rem', fontWeight: 700, color: '#111827', mb: 1,
+              fontSize: '1.05rem', fontWeight: 700, color: colors.primary, mb: 1,
             }}>
               {title}
             </Typography>
-            <Typography sx={{ fontSize: '0.9rem', color: '#4B5563', lineHeight: 1.75 }}>
+            <Typography sx={{ fontSize: '0.9rem', color: colors.textMuted, lineHeight: 1.75 }}>
               {body}
             </Typography>
           </Box>

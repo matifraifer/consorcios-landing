@@ -1,91 +1,102 @@
 import { Box, Container, Grid, Typography } from '@mui/material'
 import HomeWorkIcon from '@mui/icons-material/HomeWork'
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt'
-import LanguageIcon from '@mui/icons-material/Language'
-import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
-import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead'
-import ContactsIcon from '@mui/icons-material/Contacts'
+import ApartmentIcon from '@mui/icons-material/Apartment'
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded'
+import { colors, radius, shadow } from '../theme/tokens'
 
-const FEATURES = [
+const SOLUTIONS = [
   {
     Icon: HomeWorkIcon,
-    title: 'Gestión de propiedades',
-    desc: 'Cargá y gestioná tu cartera de propiedades con fotos, precios y estado actualizado en tiempo real.',
+    title: 'Nuestra solución para inmobiliarias',
+    items: [
+      'Gestión de contratos',
+      'CRM de leads y prospectos',
+      'Página web propia',
+      'Integración con WhatsApp',
+      'Recomendación automatizada según preferencias',
+      'Gestión de alquileres',
+      'Recordatorio automático de pago de alquileres',
+      'Control automático de alquileres',
+    ],
   },
   {
-    Icon: PeopleAltIcon,
-    title: 'CRM de prospectos',
-    desc: 'Seguimiento visual por etapas, desde el primer contacto hasta el cierre del negocio.',
-  },
-  {
-    Icon: LanguageIcon,
-    title: 'Web pública',
-    desc: 'Tu catálogo online listo para compartir con clientes, sin costo adicional.',
-  },
-  {
-    Icon: ReceiptLongIcon,
-    title: 'Expensas y consorcios',
-    desc: 'Liquidación de expensas, seguimiento de pagos y gestión de reclamos para administradores.',
-  },
-  {
-    Icon: MarkEmailReadIcon,
-    title: 'Consultas web',
-    desc: 'Recibí las consultas que llegan desde tu sitio y convertílas en clientes desde la misma plataforma.',
-  },
-  {
-    Icon: ContactsIcon,
-    title: 'Base de contactos',
-    desc: 'Toda tu cartera de clientes organizada con historial completo y vinculación a propiedades.',
+    Icon: ApartmentIcon,
+    title: 'Nuestra solución para administradores',
+    items: [
+      'Portal del vecino',
+      'Gestión de reclamos',
+      'Control de gastos',
+      'Control de pagos automatizado',
+      'Integración con Mercado Pago',
+      'Automatización de avisos y recordatorios de pagos',
+    ],
   },
 ]
 
+function SolutionCard({ Icon, title, items }) {
+  return (
+    <Box sx={{
+      bgcolor: colors.surface, borderRadius: radius.lg,
+      border: `1px solid ${colors.border}`, p: { xs: 3, md: 4 },
+      height: '100%',
+      transition: 'all 0.2s ease',
+      '&:hover': { borderColor: colors.accentSoft, boxShadow: shadow.md },
+    }}>
+      <Box sx={{
+        width: 48, height: 48, borderRadius: radius.md,
+        bgcolor: colors.accentSubtle,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        mb: 2.5,
+      }}>
+        <Icon sx={{ fontSize: 24, color: colors.accent }} />
+      </Box>
+
+      <Typography sx={{ fontSize: '1.1rem', fontWeight: 700, color: colors.primary, mb: 2.5 }}>
+        {title}
+      </Typography>
+
+      <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0, display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+        {items.map((item) => (
+          <Box component="li" key={item} sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.25 }}>
+            <CheckCircleRoundedIcon sx={{ fontSize: 18, color: colors.accent, mt: '1px', flexShrink: 0 }} />
+            <Typography sx={{ fontSize: '0.88rem', color: colors.text, lineHeight: 1.6 }}>
+              {item}
+            </Typography>
+          </Box>
+        ))}
+        <Box component="li" sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.25 }}>
+          <Typography sx={{ fontSize: '0.88rem', color: colors.textMuted, fontStyle: 'italic', ml: '30px' }}>
+            Y mucho más
+          </Typography>
+        </Box>
+      </Box>
+    </Box>
+  )
+}
+
 export default function Features() {
   return (
-    <Box id="funcionalidades" sx={{ py: { xs: 8, md: 12 }, bgcolor: '#F8FAFC' }}>
+    <Box id="funcionalidades" sx={{ py: { xs: 8, md: 12 }, bgcolor: colors.bg }}>
       <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 8 } }}>
           <Typography sx={{
             fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.15em',
-            textTransform: 'uppercase', color: '#065F46', mb: 1.5,
+            textTransform: 'uppercase', color: colors.accent, mb: 1.5,
           }}>
             Funcionalidades
           </Typography>
           <Typography sx={{
             fontSize: { xs: '1.8rem', md: '2.4rem' }, fontWeight: 800,
-            color: '#111827', letterSpacing: '-0.02em', lineHeight: 1.2,
+            color: colors.primary, letterSpacing: '-0.02em', lineHeight: 1.2,
           }}>
-            Todo lo que necesita tu inmobiliaria
+            ¡Así te ayuda Granito!
           </Typography>
         </Box>
 
-        <Grid container spacing={3}>
-          {FEATURES.map(({ Icon, title, desc }) => (
-            <Grid item xs={12} sm={6} md={4} key={title}>
-              <Box sx={{
-                bgcolor: 'white', borderRadius: '12px',
-                border: '1px solid #E5E7EB', p: 3, height: '100%',
-                transition: 'all 0.2s ease',
-                '&:hover': {
-                  borderColor: '#A7F3D0',
-                  boxShadow: '0 4px 20px rgba(6,95,70,0.08)',
-                  transform: 'translateY(-2px)',
-                },
-              }}>
-                <Box sx={{
-                  width: 44, height: 44, borderRadius: '10px',
-                  bgcolor: '#ECFDF5',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  mb: 2,
-                }}>
-                  <Icon sx={{ fontSize: 22, color: '#065F46' }} />
-                </Box>
-                <Typography sx={{ fontSize: '0.9rem', fontWeight: 700, color: '#111827', mb: 1 }}>
-                  {title}
-                </Typography>
-                <Typography sx={{ fontSize: '0.82rem', color: '#6B7280', lineHeight: 1.65 }}>
-                  {desc}
-                </Typography>
-              </Box>
+        <Grid container spacing={4}>
+          {SOLUTIONS.map((solution) => (
+            <Grid key={solution.title} size={{ xs: 12, md: 6 }}>
+              <SolutionCard {...solution} />
             </Grid>
           ))}
         </Grid>
