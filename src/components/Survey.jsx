@@ -11,6 +11,7 @@ import { colors, radius, shadow, gradients } from '../theme/tokens'
 import { SURVEY_ENDPOINT } from '../config'
 
 const OTHER_OPTION = 'Otros'
+const NO_EXPENSAS_OPTION = 'No se pagan expensas'
 
 const QUESTIONS = [
   {
@@ -23,7 +24,7 @@ const QUESTIONS = [
     id: 'cobro_expensas',
     type: 'single',
     question: '¿Quién se encarga de cobrar las expensas en tu barrio/consorcio?',
-    options: ['Un administrador del consorcio', 'Un vecino', 'La inmobiliaria con la que alquilo', 'No se pagan expensas'],
+    options: ['Un administrador del consorcio', 'Un vecino', 'La inmobiliaria con la que alquilo', NO_EXPENSAS_OPTION],
   },
   {
     id: 'metodo_pago',
@@ -531,6 +532,13 @@ export default function Survey() {
     const nextAnswers = { ...answers, [currentQuestion.id]: value }
     setAnswers(nextAnswers)
     setTransitioning(true)
+    if (currentQuestion.id === 'cobro_expensas' && value === NO_EXPENSAS_OPTION) {
+      setTimeout(() => {
+        setAnswers(nextAnswers)
+        submitAnswers({ ...nextAnswers, contacto_nombre: '', contacto_telefono: '' })
+      }, ADVANCE_DELAY)
+      return
+    }
     setTimeout(() => goToNextOrContact(nextAnswers), ADVANCE_DELAY)
   }
 
