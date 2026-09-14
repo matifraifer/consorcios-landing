@@ -5,9 +5,16 @@ import About from './components/About'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import PrivacyPolicy from './components/PrivacyPolicy'
+import Survey from './components/Survey'
 
 export default function App() {
-  const isPrivacyPolicy = window.location.pathname === '/politica-de-privacidad'
+  const path = window.location.pathname
+
+  if (path === '/survey') {
+    return <Survey />
+  }
+
+  const isPrivacyPolicy = path === '/politica-de-privacidad'
 
   return (
     <>
