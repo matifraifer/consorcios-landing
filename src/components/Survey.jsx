@@ -482,6 +482,15 @@ export default function Survey() {
     }
   }, [])
 
+  async function trySubmit(finalAnswers) {
+    const res = await fetch(SURVEY_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ timestamp: new Date().toISOString(), answers: finalAnswers }),
+    })
+    if (!res.ok) throw new Error(`Respuesta no OK (status ${res.status})`)
+  }
+
   async function submitAnswers(finalAnswers) {
     setStatus('submitting')
     if (!SURVEY_ENDPOINT) {
@@ -490,30 +499,38 @@ export default function Survey() {
       return
     }
     try {
-      const res = await fetch(SURVEY_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ timestamp: new Date().toISOString(), answers: finalAnswers }),
-      })
-      if (!res.ok) throw new Error(`Respuesta no OK (status ${res.status})`)
+      await trySubmit(finalAnswers)
       try {
         localStorage.removeItem('granito_survey_failed')
       } catch {
         // localStorage no disponible, no hacemos nada
       }
       setStatus('done')
-    } catch (err) {
-      const message = err?.message || String(err)
-      console.error('Error al guardar la encuesta:', message)
+    } catch (firstErr) {
+      // reintento inmediato: navegadores in-app (Instagram/Facebook) a veces
+      // bloquean el primer intento y funcionan al segundo
       try {
-        localStorage.setItem('granito_survey_failed', JSON.stringify({
-          message, timestamp: new Date().toISOString(), answers: finalAnswers,
-        }))
-      } catch {
-        // localStorage no disponible, no hacemos nada
+        await trySubmit(finalAnswers)
+        try {
+          localStorage.removeItem('granito_survey_failed')
+        } catch {
+          // localStorage no disponible, no hacemos nada
+        }
+        setStatus('done')
+        return
+      } catch (secondErr) {
+        const message = secondErr?.message || String(secondErr)
+        console.error('Error al guardar la encuesta:', message)
+        try {
+          localStorage.setItem('granito_survey_failed', JSON.stringify({
+            message, timestamp: new Date().toISOString(), answers: finalAnswers,
+          }))
+        } catch {
+          // localStorage no disponible, no hacemos nada
+        }
+        reportError('submit', message, finalAnswers)
+        setStatus('error')
       }
-      reportError('submit', message, finalAnswers)
-      setStatus('error')
     }
   }
 
